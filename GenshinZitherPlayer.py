@@ -4,54 +4,9 @@ Genshin Impact Auto Play
 import os
 import time
 import tkinter
-import _thread
 import pyautogui
 
-# Get the size of the primary monitor.
-# screenWidth, screenHeight = pyautogui.size()
-# print("Running at screen@",screenWidth, 'x', screenHeight)
-
-"""
-C3  60  z
-C#3 61  NULL
-D3  62  x
-D#3 63  NULL
-E3  64  c
-F3  65  v
-F#3 66  NULL
-G3  67  b
-G#3 68  NULL
-A3  69  n
-A#3 70  NULL
-B3  71  m
-
-C4  72  a
-C#4 73  NULL
-D4  74  s
-D#4 75  NULL
-E4  76  d
-F4  77  f
-F#4 78  NULL
-G4  79  g
-G#4 80  NULL
-A4  81  h
-A#4 82  NULL
-B4  83  j
-
-C5  84  q
-C#5 85  NULL
-D5  86  w
-D#5 87  NULL
-E5  88  e
-F5  89  r
-F#5 90  NULL
-G5  91  t
-G#5 92  NULL
-A5  93  y
-A#5 94  NULL
-B5  95  u
-"""
-KEY_MAP = {60:'z',62:'x',64:'c',65:'v',67:'b',69:'n',71:'m',72:'a',74:'s',76:'d',77:'f',79:'g',81:'h',83:'j',84:'q',86:'w',88:'e',89:'r',91:'t',93:'y',95:'u'}
+KEY_MAP = {60:'z',62:'x',64:'c',65:'v',67:'b',69:'n',71:'m',72:'a',74:'s',76:'d',77:'f',79:'g',81:'h',83:'j',84:'q',86:'w',88:'e',89:'r',91:'t',93:'y',95:'u',0:'p'}
 
 # Transfer .mid to .txt using midi2melody
 def midiToMelody(m_midi_path):
@@ -71,26 +26,25 @@ def readTxtMelody():
     midi_txt_file.close()
     return notes
         
-        
+            
 
 if __name__ == '__main__':
-    # note = int(input("Input note number:"))
-    # while(True):
-    #     if(note==0):
-    #         break
-    #     print(noteToKeyboard(note))
-    #     note = int(input("Input note number:"))
-    # midi_path = input("Midi path")
-    # midiToMelody(midi_path)
+    pyautogui.PAUSE = 0
     notes = readTxtMelody()
-    time.sleep(4)
-    for time,cur_note in notes:
-        if(cur_note==0):
-            pyautogui.sleep(0.02)
-            continue
-        cur_note = str(noteToKeyboard(int(cur_note)))
-        pyautogui.keyDown(cur_note)
-        pyautogui.sleep(0.02)
-        pyautogui.keyUp(cur_note)
-        
+    bpm = 138
+    player = []
+    last_bar, last_note = -1, -1
+    for cur_bar,cur_note in notes:
+        print(cur_bar,cur_note)
+        if(last_bar != -1):
+            player.append([float(cur_bar)-last_bar, int(last_note)])
+            print("append-> ",float(cur_bar)-last_bar,last_note)
+        last_bar, last_note = float(cur_bar), int(cur_note)
+    
+    time.sleep(3)
+    bpm = 60/bpm   
+    for sus_time, note in player:
+        pyautogui.keyDown(noteToKeyboard(note))
+        pyautogui.sleep(sus_time*bpm)
+        pyautogui.keyUp(noteToKeyboard(note))
         
