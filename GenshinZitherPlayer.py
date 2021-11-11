@@ -62,8 +62,14 @@ def noteToKeyboard(m_note):
 
 def readTxtMelody():
     midi_txt_file = open("midi.txt","r")
-    for time_temp,note_temp in midi_txt_file.readlines():
-        print(time_temp,note_temp)
+    notes=[]
+    contents = midi_txt_file.readlines()
+    for msg in contents:
+        msg = msg.strip('\n')
+        adm = msg.split('\t')
+        notes.append(adm)
+    midi_txt_file.close()
+    return notes
         
         
 
@@ -76,4 +82,15 @@ if __name__ == '__main__':
     #     note = int(input("Input note number:"))
     # midi_path = input("Midi path")
     # midiToMelody(midi_path)
-    readTxtMelody()
+    notes = readTxtMelody()
+    time.sleep(4)
+    for time,cur_note in notes:
+        if(cur_note==0):
+            pyautogui.sleep(0.02)
+            continue
+        cur_note = str(noteToKeyboard(int(cur_note)))
+        pyautogui.keyDown(cur_note)
+        pyautogui.sleep(0.02)
+        pyautogui.keyUp(cur_note)
+        
+        
