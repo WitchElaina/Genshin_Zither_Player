@@ -14,34 +14,33 @@ pyautogui.PAUSE = 0
 def noteTrans(m_note_value):
     return KEY_MAP[int(m_note_value)]
 
-# # Genshin's zither only support melody in C Major, Use this to translate other scale to C Major
-# def allToCMajor(m_file_name):
-#     note_temp = []
-#     for msg in mido.MidiFile(m_file_name+".mid"):
-#         if(msg.type == "note_on" or msg.type == "note_off"):
-#             if(note_temp.type): 
-#                 # todo
-#                 note_temp.append(int(msg.note))
+# Genshin's zither only support melody in C Major, Use this to translate other scale to C Major
+def allToCMajor(m_file_name):
+    note_temp = []
+    for msg in mido.MidiFile(m_file_name+".mid"):
+        if(msg.type == "note_on" or msg.type == "note_off"):
+            if(note_temp.type): 
+                # todo
+                note_temp.append(int(msg.note))
         
         
 
 def playMidi(m_file_name, m_bpm):
     # Trans bpm to spb ( Second per bar )
-    spb = float(m_bpm /60) 
+    spb = float(60 / m_bpm * 2) 
     
     # Read midi file
     for msg in mido.MidiFile(m_file_name+".mid"):
         if(msg.type=="note_on"):
             # Press
             print(msg.type, msg.note, msg.time)
-            if(not int(msg.time)):
-                pyautogui.sleep(float(msg.time)*spb)
+            pyautogui.sleep(float(msg.time)*spb)
             pyautogui.keyDown(noteTrans(msg.note))
         elif(msg.type=="note_off"):
             # Release
             print(msg.type, msg.note, msg.time, "\n")
             pyautogui.sleep(float(msg.time)*spb)
-            pyautogui.keyDown(noteTrans(msg.note))
+            pyautogui.keyUp(noteTrans(msg.note))
         else:
             continue
 
@@ -49,9 +48,10 @@ def counter(m_second):
     # Sleep m_second s with print
     for i in range(m_second):
         print(m_second-i, "s...")
-        
+        time.sleep(1)        
+               
 if __name__ == '__main__':
     file_name = input("Select midi file: ")
     bpm = int(input("Input bpm: "))
-    counter(3)
+    counter(5)
     playMidi(file_name,bpm)
