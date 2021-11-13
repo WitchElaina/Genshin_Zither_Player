@@ -30,7 +30,7 @@ def playMidi(m_file_name, m_bpm):
     spb = float(60 / m_bpm * 2) 
     
     # Read midi file
-    for msg in mido.MidiFile(m_file_name+".mid"):
+    for msg in mido.MidiFile(m_file_name):
         if(msg.type=="note_on"):
             # Press
             print(msg.type, msg.note, msg.time)
