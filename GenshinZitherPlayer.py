@@ -15,13 +15,13 @@ def noteTrans(m_note_value):
     return KEY_MAP[int(m_note_value)]
 
 # Genshin's zither only support melody in C Major, Use this to translate other scale to C Major
-def allToCMajor(m_file_name):
-    note_temp = []
-    for msg in mido.MidiFile(m_file_name+".mid"):
-        if(msg.type == "note_on" or msg.type == "note_off"):
-            if(note_temp.type): 
-                # todo
-                note_temp.append(int(msg.note))
+# def allToCMajor(m_file_name):
+#     note_temp = []
+#     for msg in mido.MidiFile(m_file_name+".mid"):
+#         if(msg.type == "note_on" or msg.type == "note_off"):
+#             if(note_temp.type): 
+#                 # todo
+#                 note_temp.append(int(msg.note))
         
         
 
