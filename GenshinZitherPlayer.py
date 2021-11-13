@@ -1,50 +1,57 @@
-"""
-Genshin Impact Auto Play
-"""
+import mido
 import os
 import time
 import tkinter
 import pyautogui
 
+# Key Map between midi file and Genshin Keyboard
 KEY_MAP = {60:'z',62:'x',64:'c',65:'v',67:'b',69:'n',71:'m',72:'a',74:'s',76:'d',77:'f',79:'g',81:'h',83:'j',84:'q',86:'w',88:'e',89:'r',91:'t',93:'y',95:'u',0:'p'}
 
-# Transfer .mid to .txt using midi2melody
-def midiToMelody(m_midi_path):
-    os.system("midi2melody "+m_midi_path+" > ./midi.txt")
-    
-def noteToKeyboard(m_note):
-    return KEY_MAP[m_note]
+# Turn off autopause in pyautogui
+pyautogui.PAUSE = 0
 
-def readTxtMelody():
-    midi_txt_file = open("midi.txt","r")
-    notes=[]
-    contents = midi_txt_file.readlines()
-    for msg in contents:
-        msg = msg.strip('\n')
-        adm = msg.split('\t')
-        notes.append(adm)
-    midi_txt_file.close()
-    return notes
+# Translate midi note to keybord
+def noteTrans(m_note_value):
+    return KEY_MAP[int(m_note_value)]
+
+# # Genshin's zither only support melody in C Major, Use this to translate other scale to C Major
+# def allToCMajor(m_file_name):
+#     note_temp = []
+#     for msg in mido.MidiFile(m_file_name+".mid"):
+#         if(msg.type == "note_on" or msg.type == "note_off"):
+#             if(note_temp.type): 
+#                 # todo
+#                 note_temp.append(int(msg.note))
         
-            
+        
 
+def playMidi(m_file_name, m_bpm):
+    # Trans bpm to spb ( Second per bar )
+    spb = float(m_bpm /60) 
+    
+    # Read midi file
+    for msg in mido.MidiFile(m_file_name+".mid"):
+        if(msg.type=="note_on"):
+            # Press
+            print(msg.type, msg.note, msg.time)
+            if(not int(msg.time)):
+                pyautogui.sleep(float(msg.time)*spb)
+            pyautogui.keyDown(noteTrans(msg.note))
+        elif(msg.type=="note_off"):
+            # Release
+            print(msg.type, msg.note, msg.time, "\n")
+            pyautogui.sleep(float(msg.time)*spb)
+            pyautogui.keyDown(noteTrans(msg.note))
+        else:
+            continue
+
+def counter(m_second):
+    # Sleep m_second s with print
+    for i in range(m_second):
+        print(m_second-i, "s...")
+        
 if __name__ == '__main__':
-    pyautogui.PAUSE = 0
-    notes = readTxtMelody()
-    bpm = 138
-    player = []
-    last_bar, last_note = -1, -1
-    for cur_bar,cur_note in notes:
-        print(cur_bar,cur_note)
-        if(last_bar != -1):
-            player.append([float(cur_bar)-last_bar, int(last_note)])
-            print("append-> ",float(cur_bar)-last_bar,last_note)
-        last_bar, last_note = float(cur_bar), int(cur_note)
-    
-    time.sleep(3)
-    bpm = 60/bpm   
-    for sus_time, note in player:
-        pyautogui.keyDown(noteToKeyboard(note))
-        pyautogui.sleep(sus_time*bpm)
-        pyautogui.keyUp(noteToKeyboard(note))
-        
+    file_name = input("Select midi file: ")
+    bpm = int(input("Input bpm: "))
+    counter(3)
+    playMidi(file_name,bpm)
