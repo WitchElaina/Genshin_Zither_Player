@@ -32,7 +32,7 @@ def allToCMajor(m_file_name):
                 print(msg.note)
     
 
-    for i in range(-12,24):
+    for i in range(-48,48):
         isC = True
         for cur in note_temp:
             if(KEY_MAP.__contains__(int(cur)+i)==False):
