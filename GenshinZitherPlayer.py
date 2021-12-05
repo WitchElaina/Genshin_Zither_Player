@@ -29,7 +29,6 @@ def allToCMajor(m_file_name):
                     break;
             if(not isExist): 
                 note_temp.append(msg.note)
-                print(msg.note)
     
 
     for i in range(-48,48):
