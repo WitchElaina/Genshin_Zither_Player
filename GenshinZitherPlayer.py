@@ -29,9 +29,10 @@ def allToCMajor(m_file_name):
                     break;
             if(not isExist): 
                 note_temp.append(msg.note)
+                print(msg.note)
     
 
-    for i in range(-12,13):
+    for i in range(-12,24):
         isC = True
         for cur in note_temp:
             if(KEY_MAP.__contains__(int(cur)+i)==False):
@@ -81,9 +82,9 @@ if __name__ == '__main__':
     if(not(key_add)):
         exit("The midi file is too complex to play!")
         
-    if(len(key_add) == 1):
-        if(SCALES[key_add[0]] == "C"):
-            isC = True
+    # if(len(key_add) == 1):
+    #     if(SCALES[key_add[0]] == "C"):
+    #         isC = True
     
     
     # Select avialable scale
