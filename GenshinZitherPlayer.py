@@ -1,7 +1,6 @@
 import mido
 import os
 import time
-import tkinter
 import pyautogui
 
 # Key Map between midi file and Genshin Keyboard
@@ -12,15 +11,28 @@ SCALES = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
 # Turn off autopause in pyautogui
 pyautogui.PAUSE = 0
 
+# Scan mid file in mid_repo folder
+def midScanner():
+    m_file = os.listdir("."+os.sep+"midi_repo")
+    ret = []
+    for i in m_file:
+        if os.path.splitext(i)[1] == '.mid':
+            ret.append(i)
+    return ret
+            
+
+
 # Translate midi note to keybord
 def noteTrans(m_note_value):
     return KEY_MAP[m_note_value]
 
 # Genshin's zither only support melody in C Major, Use this to translate other scale to C Major
 def allToCMajor(m_file_name):
+    file_name = "." + os.sep + "midi_repo" + os.sep + m_file_name
+    print(file_name)
     note_temp = []
     avialiable_add = []
-    for msg in mido.MidiFile(m_file_name):
+    for msg in mido.MidiFile(file_name):
         if(msg.type == "note_on" or msg.type == "note_off"):
             isExist = False
             for i in note_temp:
@@ -45,11 +57,12 @@ def allToCMajor(m_file_name):
         
 
 def playMidi(m_file_name, m_bpm, m_key_add):
+    file_name = "." + os.sep + "midi_repo" + os.sep + m_file_name
     # Trans bpm to spb ( Second per bar )
     spb = float(60 / m_bpm * 2) 
     
     # Read midi file
-    for msg in mido.MidiFile(m_file_name):
+    for msg in mido.MidiFile(file_name):
         if(msg.type=="note_on"):
             # Press
             pyautogui.sleep(float(msg.time)*spb)
@@ -73,7 +86,7 @@ if __name__ == '__main__':
     isC = False
     
     # Input midi file path and bpm
-    file_name = "." + os.sep+ "midi_repo" + os.sep + input("Select midi file: ") + ".mid"
+    file_name = input("Select midi file: ")
     bpm = int(input("Input bpm: "))
     
     # Detect scale
