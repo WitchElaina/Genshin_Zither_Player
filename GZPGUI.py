@@ -35,10 +35,10 @@ class GZPGUI(QMainWindow, Ui_MainWindow):
         self.pushButton_end.clicked.connect(self.stop)
         
         self.pushButton_play.clicked.connect(self.playMidi)
+        self.pushButton_play.pressed.connect(self.showPlayinfo)
         
-        self.progressBar.setValue(0)
         self.spinBox_sec.setValue(5)
-        
+        self.label_info.setText('GenshinZitherPlayer@Mszook,2021')
         
     def midiSelected(self):
         if(self.comboBox_mid_name.currentIndex()!=0):
@@ -60,10 +60,12 @@ class GZPGUI(QMainWindow, Ui_MainWindow):
                     avlb_key.append(str(i)+"key")
                     self.key_adds.append(i)
             self.comboBox_key.addItems(avlb_key)
+            self.label_info.setText('当前选中: '+self.comboBox_mid_name.currentText())
             
         else:
             self.comboBox_key.setEnabled(False)
             self.spinBox_bpm.setEnabled(False)
+            self.label_info.setText('GenshinZitherPlayer@Mszook,2021')
             
     def playMidi(self):
         # Player init
@@ -72,21 +74,33 @@ class GZPGUI(QMainWindow, Ui_MainWindow):
         bpm = int(self.spinBox_bpm.value())
         key_add = int(self.key_adds[self.comboBox_key.currentIndex()])
         
-        self.progressBar.setMinimum(0)
-        self.progressBar.setMaximum(0)
+        
+
         # todo
         GZP.counter(self.spinBox_sec.value())
         GZP.playMidi(file_name, bpm, key_add)
-        
-        self.progressBar.setMinimum(0)
-        self.progressBar.setMaximum(100)
-        self.progressBar.setValue(0)
-        
-        
-        
+         
         
     def stop(self):
         exit(0)
+        
+    def showPlayinfo(self):
+        self.label_info.setText('请点击原神窗口内任意处')
+        self.comboBox_key.setEnabled(False)
+        self.comboBox_mid_name.setEnabled(False)
+        self.pushButton_end.setEnabled(False)
+        self.spinBox_bpm.setEnabled(False)
+        self.spinBox_sec.setEnabled(False)
+        self.pushButton_play.setText('Playing..')
+        
+    def showEndPlayinfo(self):
+        self.label_info.setText('GenshinZitherPlayer@Mszook,2021')
+        self.comboBox_key.setEnabled(True)
+        self.comboBox_mid_name.setEnabled(True)
+        self.pushButton_end.setEnabled(True)
+        self.spinBox_bpm.setEnabled(True)
+        self.spinBox_sec.setEnabled(True)
+        self.pushButton_play.setText('Play')
 
 if __name__ == "__main__":
     if is_admin():
