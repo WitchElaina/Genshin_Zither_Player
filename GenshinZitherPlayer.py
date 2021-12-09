@@ -29,7 +29,7 @@ def noteTrans(m_note_value):
 # Genshin's zither only support melody in C Major, Use this to translate other scale to C Major
 def allToCMajor(m_file_name):
     file_name = "." + os.sep + "midi_repo" + os.sep + m_file_name
-    print(file_name)
+    # print(file_name)
     note_temp = []
     avialiable_add = []
     for msg in mido.MidiFile(file_name):
@@ -77,7 +77,7 @@ def playMidi(m_file_name, m_bpm, m_key_add):
 def counter(m_second):
     # Sleep m_second s with print
     for i in range(m_second):
-        print(m_second-i, "s...")
+        # print(m_second-i, "s...")
         time.sleep(1)        
                
 if __name__ == '__main__':
