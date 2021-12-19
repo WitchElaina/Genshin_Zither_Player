@@ -51,16 +51,24 @@ class GZPGUI(QMainWindow, Ui_MainWindow):
             self.comboBox_key.clear()
             avlb_key.clear()
             self.key_adds.clear()
-                       
-            for i in GZP.allToCMajor(self.comboBox_mid_name.currentText()):
-                if(i>0):
-                    avlb_key.append("+"+str(i)+"key")
-                    self.key_adds.append(i)
-                elif(i<=0):
-                    avlb_key.append(str(i)+"key")
-                    self.key_adds.append(i)
-            self.comboBox_key.addItems(avlb_key)
-            self.label_info.setText('当前选中: '+self.comboBox_mid_name.currentText())
+            
+            if(not( GZP.allToCMajor(self.comboBox_mid_name.currentText()))):
+                self.label_info.setText('Midi out of range! Please select another.')
+                self.comboBox_key.setEnabled(False)
+                self.pushButton_play.setEnabled(False)
+                
+            else:
+                for i in GZP.allToCMajor(self.comboBox_mid_name.currentText()):
+                    if(i>0):
+                        avlb_key.append("+"+str(i)+"key")
+                        self.key_adds.append(i)
+                    elif(i<=0):
+                        avlb_key.append(str(i)+"key")
+                        self.key_adds.append(i)
+                self.comboBox_key.addItems(avlb_key)
+                self.label_info.setText('当前选中: '+self.comboBox_mid_name.currentText())
+                self.comboBox_key.setEnabled(True)
+                self.pushButton_play.setEnabled(True)
             
         else:
             self.comboBox_key.setEnabled(False)
