@@ -1,8 +1,9 @@
 # This Python file uses the following encoding: utf-8
 from __future__ import print_function
 import sys,os
+import PyQt5
 from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QWidget
-from PyQt5 import uic
+from PyQt5 import QtCore, uic
 import GenshinZitherPlayer as GZP
 from mainwindow_ui import Ui_MainWindow
 from functools import partial
@@ -22,6 +23,7 @@ def is_admin():
 class GZPGUI(QMainWindow, Ui_MainWindow):
     count_sec = 5
     key_adds = []
+    state = "free"
     def __init__(self, parent=None):
         # self.ui = uic.loadUi("mainwindow.ui")
         super(GZPGUI, self).__init__(parent)
@@ -32,13 +34,16 @@ class GZPGUI(QMainWindow, Ui_MainWindow):
         self.comboBox_mid_name.currentIndexChanged.connect(self.midiSelected)
         
         self.pushButton_end.setAutoRepeat(False)
-        self.pushButton_end.clicked.connect(self.stop)
+        self.pushButton_end.clicked.connect(self.endPlay)
+        self.pushButton_end.pressed.connect(self.showEndPlayinfo)
         
-        self.pushButton_play.clicked.connect(self.playMidi)
+        self.pushButton_play.clicked.connect(self.startPlay)
         self.pushButton_play.pressed.connect(self.showPlayinfo)
         
         self.spinBox_sec.setValue(5)
         self.label_info.setText('GenshinZitherPlayer@Mszook,2021')
+        
+        self.checkBox_popup.clicked.connect(self.poupWindow)
         
     def midiSelected(self):
         if(self.comboBox_mid_name.currentIndex()!=0):
@@ -78,15 +83,18 @@ class GZPGUI(QMainWindow, Ui_MainWindow):
     def playMidi(self):
         # Player init
         file_name = self.comboBox_mid_name.currentText()
-        # print(file_name)
         bpm = int(self.spinBox_bpm.value())
         key_add = int(self.key_adds[self.comboBox_key.currentIndex()])
-        
-        
 
         # todo
         GZP.counter(self.spinBox_sec.value())
-        GZP.playMidi(file_name, bpm, key_add)
+        GZP.playMidi(file_name, bpm, key_add, self.state)
+        
+    def endPlay(self):
+        self.state = "end"
+        
+    def startPlay(self):
+        self.state = "play"
          
         
     def stop(self):
@@ -96,7 +104,7 @@ class GZPGUI(QMainWindow, Ui_MainWindow):
         self.label_info.setText('请点击原神窗口内任意处')
         self.comboBox_key.setEnabled(False)
         self.comboBox_mid_name.setEnabled(False)
-        self.pushButton_end.setEnabled(False)
+        # self.pushButton_end.setEnabled(False)
         self.spinBox_bpm.setEnabled(False)
         self.spinBox_sec.setEnabled(False)
         self.pushButton_play.setText('Playing..')
@@ -109,15 +117,26 @@ class GZPGUI(QMainWindow, Ui_MainWindow):
         self.spinBox_bpm.setEnabled(True)
         self.spinBox_sec.setEnabled(True)
         self.pushButton_play.setText('Play')
+        
+    def poupWindow(self):
+        self.setWindowFlags(self.windowFlags | QtCore.Qt.WindowStaysOnTopHint)
+        
+    def sheetGen(self):
+        return
 
 if __name__ == "__main__":
-    if is_admin():
-        app = QApplication([])
-        window = GZPGUI()
+    try:
+        if is_admin():
+            app = QApplication([])
+            window = GZPGUI()
+            window.show()
+            app.exec_()
+        else:
+            if sys.version_info[0] == 3:
+                ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, __file__, None, 1)
+            else:#in python2.x
+                ctypes.windll.shell32.ShellExecuteW(None, u"runas", unicode(sys.executable), unicode(__file__), None, 1)
+    except BaseException: 
+        print("Error!")
         window.show()
-        sys.exit(app.exec_())
-    else:
-        if sys.version_info[0] == 3:
-            ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, __file__, None, 1)
-        else:#in python2.x
-            ctypes.windll.shell32.ShellExecuteW(None, u"runas", unicode(sys.executable), unicode(__file__), None, 1)
+        app.exec_()
