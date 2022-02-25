@@ -2,6 +2,10 @@
 An auto zither player for Genshin Impact Winows Version,support midi files
 Based on [pyautogui](https://github.com/asweigart/pyautogui) and [mido](https://github.com/mido/mido)
 
+---
+## TODO
+- 播放/暂停/终止
+- 制谱
 ----
 # 原神自动弹琴脚本
 这是一个支持在Windows端自动读取`midi`文件并演奏的原神弹琴脚本，基于[pyautogui](https://github.com/asweigart/pyautogui) 和 [mido](https://github.com/mido/mido)开发

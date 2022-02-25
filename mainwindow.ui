@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>314</width>
-    <height>328</height>
+    <width>545</width>
+    <height>375</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,171 +26,196 @@
    <string>Genshin Zither Player</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <widget class="QWidget" name="widget" native="true">
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="1" rowspan="2">
-        <widget class="QComboBox" name="comboBox_mid_name">
-         <item>
-          <property name="text">
-           <string>Please Select..</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QComboBox" name="comboBox_key">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" rowspan="2">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>BPM / 曲速</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Midi Name / 曲名</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QSpinBox" name="spinBox_bpm">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-         </property>
-         <property name="buttonSymbols">
-          <enum>QAbstractSpinBox::UpDownArrows</enum>
-         </property>
-         <property name="accelerated">
-          <bool>true</bool>
-         </property>
-         <property name="minimum">
-          <number>40</number>
-         </property>
-         <property name="maximum">
-          <number>2000</number>
-         </property>
-         <property name="value">
-          <number>120</number>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Key / 移调</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QComboBox" name="comboBox_play_mode">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string>演奏</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>制谱</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_5">
-         <property name="text">
-          <string>Mode / 模式</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item>
-     <widget class="QWidget" name="widget_2" native="true">
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QPushButton" name="pushButton_play">
-         <property name="text">
-          <string>Start</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_end">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="text">
-          <string>Exit</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>等待时间</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="spinBox_sec">
-         <property name="minimum">
-          <number>2</number>
-         </property>
-         <property name="maximum">
-          <number>20</number>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
     <item>
      <widget class="QWidget" name="widget_4" native="true">
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QCheckBox" name="checkBox_popup">
-         <property name="text">
-          <string>窗口置顶</string>
-         </property>
+        <widget class="QWidget" name="widget" native="true">
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="2" column="1">
+           <widget class="QSpinBox" name="spinBox_bpm">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
+            <property name="buttonSymbols">
+             <enum>QAbstractSpinBox::UpDownArrows</enum>
+            </property>
+            <property name="accelerated">
+             <bool>true</bool>
+            </property>
+            <property name="minimum">
+             <number>40</number>
+            </property>
+            <property name="maximum">
+             <number>2000</number>
+            </property>
+            <property name="value">
+             <number>120</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1" rowspan="2">
+           <widget class="QComboBox" name="comboBox_mid_name">
+            <item>
+             <property name="text">
+              <string>Please Select..</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QComboBox" name="comboBox_key">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Midi Name / 曲名</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Key / 移调</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" rowspan="2">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>BPM / 曲速</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget_2" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QPushButton" name="pushButton_play">
+            <property name="text">
+             <string>Start</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_end">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Exit</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>等待时间</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spinBox_sec">
+            <property name="minimum">
+             <number>2</number>
+            </property>
+            <property name="maximum">
+             <number>20</number>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget_5" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QPushButton" name="pushButton_show">
+            <property name="text">
+             <string>显示文字谱</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkBox_popup">
+            <property name="text">
+             <string>窗口置顶</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget_3" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QLabel" name="label_info">
+            <property name="font">
+             <font>
+              <stylestrategy>PreferAntialias</stylestrategy>
+             </font>
+            </property>
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
      </widget>
     </item>
     <item>
-     <widget class="QWidget" name="widget_3" native="true">
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <widget class="QWidget" name="widget_6" native="true">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <widget class="QLabel" name="label_info">
-         <property name="font">
-          <font>
-           <stylestrategy>PreferAntialias</stylestrategy>
-          </font>
-         </property>
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <property name="wordWrap">
+        <widget class="QTextEdit" name="textEdit">
+         <property name="readOnly">
           <bool>true</bool>
          </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget_7" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QPushButton" name="pushButton_clear">
+            <property name="text">
+             <string>清除</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_export">
+            <property name="text">
+             <string>导出</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>

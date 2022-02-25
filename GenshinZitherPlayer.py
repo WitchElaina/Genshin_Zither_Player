@@ -2,6 +2,7 @@ import mido
 import os
 import time
 import pyautogui
+import keyboard
 
 # Key Map between midi file and Genshin Keyboard
 KEY_MAP = {60:'z',62:'x',64:'c',65:'v',67:'b',69:'n',71:'m',72:'a',74:'s',76:'d',77:'f',79:'g',81:'h',83:'j',84:'q',86:'w',88:'e',89:'r',91:'t',93:'y',95:'u',0:'p'}
@@ -56,31 +57,25 @@ def allToCMajor(m_file_name):
         
         
 
-def playMidi(m_file_name, m_bpm, m_key_add, m_state):
+def playMidi(m_file_name, m_bpm, m_key_add):
     file_name = "." + os.sep + "midi_repo" + os.sep + m_file_name
     # Trans bpm to spb ( Second per bar )
     spb = float(60 / m_bpm * 2) 
     
     # Read midi file
     for msg in mido.MidiFile(file_name):
-        if(m_state == "play"):
-            if(msg.type=="note_on"):
-                # Press
-                pyautogui.sleep(float(msg.time)*spb)
-                # pyautogui.keyDown(noteTrans(int(msg.note)+m_key_add))
-                pyautogui.press(noteTrans(int(msg.note)+m_key_add))
-            elif(msg.type=="note_off"):
-                # Release
-                pyautogui.sleep(float(msg.time)*spb)
-                # pyautogui.keyUp(noteTrans(int(msg.note)+m_key_add))
-            else:
-                continue
-            
-        elif(m_state == "end"):
-            break
-        
-        
-            
+        if(msg.type=="note_on"):
+            # Press
+            pyautogui.sleep(float(msg.time)*spb)
+            pyautogui.keyDown(noteTrans(int(msg.note)+m_key_add))
+            # pyautogui.press(noteTrans(int(msg.note)+m_key_add))
+            # print("Press")
+        elif(msg.type=="note_off"):
+            # Release
+            pyautogui.sleep(float(msg.time)*spb)
+            pyautogui.keyUp(noteTrans(int(msg.note)+m_key_add))
+        else:
+            continue 
 
 def counter(m_second):
     # Sleep m_second s with print
