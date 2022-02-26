@@ -1,5 +1,4 @@
 # This Python file uses the following encoding: utf-8
-from __future__ import print_function
 import sys,os
 from PyQt5.QtWidgets import QApplication,QMainWindow
 from PyQt5 import QtCore
@@ -195,6 +194,5 @@ if __name__ == "__main__":
                 ctypes.windll.shell32.ShellExecuteW(None, u"runas", unicode(sys.executable), unicode(__file__), None, 1)
     except BaseException: 
         print("Error!")
-        window.show()
-        sys.exit(app.exec_())
+        
         

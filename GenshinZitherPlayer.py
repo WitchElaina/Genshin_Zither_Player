@@ -34,7 +34,8 @@ def allToCMajor(m_file_name):
     note_temp = []
     avialiable_add = []
     for msg in mido.MidiFile(file_name):
-        if(msg.type == "note_on" or msg.type == "note_off"):
+        # if(msg.type == "note_on" or msg.type == "note_off"):
+        if(msg.type == "note_on"):
             isExist = False
             for i in note_temp:
                 if(i==msg.note):
@@ -59,21 +60,28 @@ def allToCMajor(m_file_name):
 
 def playMidi(m_file_name, m_bpm, m_key_add):
     file_name = "." + os.sep + "midi_repo" + os.sep + m_file_name
-    # Trans bpm to spb ( Second per bar )
-    spb = float(60 / m_bpm * 2) 
+    
+    real_time = float( 120 / m_bpm ) 
+    
+    midi = mido.MidiFile(file_name)
+    
+    # set bpm
+    tempo = mido.bpm2tempo(m_bpm)
     
     # Read midi file
-    for msg in mido.MidiFile(file_name):
+    for msg in midi:
         if(msg.type=="note_on"):
             # Press
-            pyautogui.sleep(float(msg.time)*spb)
+            sleep_time = float(msg.time) * real_time
+            pyautogui.sleep(sleep_time)
             pyautogui.keyDown(noteTrans(int(msg.note)+m_key_add))
-            # pyautogui.press(noteTrans(int(msg.note)+m_key_add))
-            # print("Press")
+            pyautogui.keyUp(noteTrans(int(msg.note)+m_key_add))
+            
         elif(msg.type=="note_off"):
             # Release
-            pyautogui.sleep(float(msg.time)*spb)
-            pyautogui.keyUp(noteTrans(int(msg.note)+m_key_add))
+            sleep_time = float(msg.time) * real_time
+            pyautogui.sleep(sleep_time)
+            
         else:
             continue 
 
