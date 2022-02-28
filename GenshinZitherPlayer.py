@@ -2,7 +2,6 @@ import mido
 import os
 import time
 import pyautogui
-import keyboard
 
 # Key Map between midi file and Genshin Keyboard
 KEY_MAP = {60:'z',62:'x',64:'c',65:'v',67:'b',69:'n',71:'m',72:'a',74:'s',76:'d',77:'f',79:'g',81:'h',83:'j',84:'q',86:'w',88:'e',89:'r',91:'t',93:'y',95:'u',0:'p'}

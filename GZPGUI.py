@@ -1,8 +1,6 @@
-# This Python file uses the following encoding: utf-8
 import sys,os
 from PyQt5.QtWidgets import QApplication,QMainWindow
 from PyQt5 import QtCore
-# import PyQt5.QtWidgets.QApplication.clipboard
 import GenshinZitherPlayer as GZP
 from mainwindow_ui import Ui_MainWindow
 import ctypes
@@ -43,6 +41,7 @@ class Thread(QtCore.QThread):
         
 class GZPGUI(QMainWindow, Ui_MainWindow):
     count_sec = 5
+    
     key_adds = []
     playThread = Thread
     def __init__(self, parent=None):
@@ -71,19 +70,7 @@ class GZPGUI(QMainWindow, Ui_MainWindow):
         
         self.pushButton_clear.clicked.connect(self.textEdit.clear)
         self.pushButton_export.clicked.connect(self.sheetExport)
-        # self.comboBox_play_mode.setEnabled(True)
-        
-        # Link Resume and Pause
-        # self.pushButton_pause.clicked.connect(self.pausePlay)
-        # self.pushButton_resume.clicked.connect(self.resumePlay)
-        
-    # Resume and Pause
-    # todo
-    # def pausePlay(self):
-    #     self.playThread.wait()
-        
-    # def resumePlay(self):
-    #     self.playThread.resume()
+
         
     def midiSelected(self):
         if(self.comboBox_mid_name.currentIndex()!=0):
@@ -166,15 +153,11 @@ class GZPGUI(QMainWindow, Ui_MainWindow):
         bpm = int(self.spinBox_bpm.value())
         key_add = int(self.key_adds[self.comboBox_key.currentIndex()])
         
-        sheet = GSM.printMidiSheet(file_name, bpm, key_add)
+        sheet = GSM.printMidiSheet(file_name, key_add)
         for notes in sheet:
             self.textEdit.append(str(notes))
             
     def sheetExport(self):
-        # sheet = str(self.textEdit.toPlainText())
-        # clipb = QtGui
-        # # clipb.setText(sheet)
-        # clipb.setText(sheet, mode=cb.Clipboard)
         self.textEdit.selectAll()
         self.textEdit.copy()
         self.label_info.setText("已导出至剪贴板!")

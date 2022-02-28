@@ -1,40 +1,34 @@
 # Transfer midi file to Genshin Impact Keyboard sheet
-from tomlkit import string
 import GenshinZitherPlayer as GZP
 import os
 
-def printMidiSheet(m_file_name, m_bpm, m_key_add):
+def printMidiSheet(m_file_name, m_key_add):
+    # init
+    ret = []
+    cur = "1 "
+    cur_time = 0;
+    cur_bar = 1;
+    
     # Add Path
     file_name = "." + os.sep + "midi_repo" + os.sep + m_file_name
     
     # Read midi_file
     midi_file = GZP.mido.MidiFile(file_name)
     
-    # Set Tempo
-    # tempo = GZP.mido.bpm2tempo(int(m_bpm))
-    # print(tempo)
-    
-    key_add = int(m_key_add)
-    ret = []
-    cur = ""
-    
     # Show info
     for msg in midi_file:
+        cur_time = msg.time + cur_time
+        if(cur_time >= 2):
+            ret.append(cur)
+            cur = ""
+            cur_bar = cur_bar + 1;
+            cur = cur + str(cur_bar) + " "
+            cur_time = 0;
         if(msg.type=="note_on"):
-            # print("Down:"+GZP.noteTrans(int(msg.note)+key_add))
-            cur = "Down:"+GZP.noteTrans(int(msg.note)+key_add)
-            
-        elif(msg.type=="note_off"):
-            # print("Up:"+GZP.noteTrans(int(msg.note)+key_add))
-            cur = "Up:"+GZP.noteTrans(int(msg.note)+key_add)
-        else:
-            continue
-        ret.append(cur)
-        
+            cur = cur + GZP.noteTrans(int(msg.note)+m_key_add)
     return ret
         
 if __name__ == '__main__':
     f_name = input("Select midi file:")
-    f_bpm = input("Set BPM:")
     f_keyadd = input("Key Add:")
-    showMidiInfo(f_name, f_bpm, f_keyadd)
+    printMidiSheet(f_name, f_keyadd)
