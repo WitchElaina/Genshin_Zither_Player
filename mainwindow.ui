@@ -150,6 +150,9 @@
           </item>
           <item>
            <widget class="QCheckBox" name="checkBox_popup">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="text">
              <string>窗口置顶</string>
             </property>
