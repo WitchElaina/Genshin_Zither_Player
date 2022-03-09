@@ -1,0 +1,2 @@
+cd .\GenshinZeitherPlayer
+.\GenshinZeitherPlayer.exe

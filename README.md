@@ -2,26 +2,45 @@
 An auto zither player for Genshin Impact Winows Version,support midi files
 Based on [pyautogui](https://github.com/asweigart/pyautogui) and [mido](https://github.com/mido/mido)
 
----
-## TODO
-- 播放/暂停/终止
-- 制谱
+## Install
+
+Download and unzip the file in release page
+
+### How to use
+Run Genshin Impact, switch to zither playing state, minimum the game window.
+
+Open the folder which has the unzipped program, double-click `run.bat`, **authorize the administrator access**, select midi, set bpm, key_add and wait time, then switch to the game window quickly and enjoy!
+
+If you want to stop play or switch another song, switch ti GenshinZitherPlayer window and press stop button.
+
+Press `Win` + `L` to terminate the program.
+
+### Import custom midi
+move midi file to **midi_repo** folder, restart the program and added midi file will be scanned automatically.
+
+### Auto key shift
+Genshin Zither Player can auto shift notes in midi file which is not in C major if available
+
+Auto key shift will never change the delta tune between the notes, so if your midi file is not in a Major Scale, it will show `Out of range`.
+
+Also, if the midi file contains more than 3 oct notes which can't play in Genshin Impact, it will show `Out of range`.
+
+> The function aims to adapt midi to Genshin Impact, instead of destoring it. 
+
 ----
 # 原神自动弹琴脚本
 这是一个支持在Windows端自动读取`midi`文件并演奏的原神弹琴脚本，基于[pyautogui](https://github.com/asweigart/pyautogui) 和 [mido](https://github.com/mido/mido)开发
 
-
 ## 安装使用
-安装最新版本[Python](https://www.python.org/downloads/)并将其加入环境变量
 
-解压release界面下载的压缩包.
+解压release界面下载的压缩包, 双击`run.bat`
 
 ### 使用步骤
 打开原神, 进入弹琴界面, 最小化游戏窗口
 
 打开`Genshin Zither Player`, **授予管理员权限**, 选择演奏曲目,演奏速度和升降调, 点击`Play`按钮并在等待时间内迅速打开最小化的原神游戏窗口, 等待时间过后即可开始演奏
 
-如需暂停演奏请按`Win`+`L`
+强制停止程序请按`Win`+`L`
 
 ### 导入自定义midi
 
