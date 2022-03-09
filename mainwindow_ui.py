@@ -89,6 +89,7 @@ class Ui_MainWindow(object):
         self.pushButton_show.setObjectName("pushButton_show")
         self.horizontalLayout_4.addWidget(self.pushButton_show)
         self.checkBox_popup = QtWidgets.QCheckBox(self.widget_5)
+        self.checkBox_popup.setEnabled(False)
         self.checkBox_popup.setObjectName("checkBox_popup")
         self.horizontalLayout_4.addWidget(self.checkBox_popup)
         self.verticalLayout.addWidget(self.widget_5)
